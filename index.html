@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 19th, my blue🩵</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Playfair+Display:ital,wght@1,600;1,700&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        :root {
+            --bg-color: #e0f2fe;
+            --accent-blue: #0284c7;
+            --light-blue: #7dd3fc;
+            --text-dark: #1e293b;
+            --paper-color: #fdfbf7; 
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: radial-gradient(circle at center, #f0f9ff 0%, #bae6fd 100%);
+            font-family: 'Outfit', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* --- ORNAMEN MENGAMBANG DI BACKGROUND --- */
+        .bg-icon {
+            position: absolute;
+            color: rgba(56, 189, 248, 0.4);
+            z-index: 1;
+            animation: float 6s infinite ease-in-out;
+        }
+        .icon-1 { top: 15%; left: 10%; font-size: 3rem; animation-delay: 0s; }
+        .icon-2 { top: 25%; right: 12%; font-size: 2.5rem; animation-delay: 1.5s; color: rgba(255,255,255,0.7); }
+        .icon-3 { bottom: 20%; left: 15%; font-size: 4rem; animation-delay: 3s; }
+        .icon-4 { bottom: 15%; right: 10%; font-size: 2rem; animation-delay: 0.5s; }
+        .icon-5 { top: 5%; right: 40%; font-size: 1.5rem; animation-delay: 2s; }
+
+        @keyframes float { 
+            0%, 100% { transform: translateY(0) rotate(0deg); } 
+            50% { transform: translateY(-20px) rotate(5deg); } 
+        }
+
+        /* --- CONTAINER AMPLOP --- */
+        #envelope-wrapper {
+            z-index: 10;
+            text-align: center;
+            transition: all 0.8s ease;
+        }
+
+        .envelope-box {
+            background: #ffffff;
+            padding: 50px 60px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(2, 132, 199, 0.15), inset 0 0 0 2px #e0f2fe, inset 0 0 0 8px #ffffff, inset 0 0 0 9px #bae6fd;
+            position: relative;
+        }
+
+        .stamp {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border: 2px dashed #93c5fd;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #93c5fd;
+            transform: rotate(10deg);
+        }
+
+        .envelope-box i.fa-envelope-open-text {
+            font-size: 70px;
+            color: var(--accent-blue);
+            margin-bottom: 20px;
+        }
+
+        #envelope-wrapper h2 {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: #0369a1;
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+        }
+
+        .btn-open {
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: 0 8px 15px rgba(2, 132, 199, 0.2);
+            transition: 0.3s;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .btn-open:hover { 
+            transform: translateY(-3px); 
+            background: #0369a1; 
+            box-shadow: 0 12px 20px rgba(2, 132, 199, 0.3);
+        }
+
+        /* --- KERTAS SURAT REALISTIS --- */
+        #mainLetter {
+            position: absolute;
+            z-index: 20;
+            background-color: var(--paper-color);
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+            padding: 55px 45px;
+            border-radius: 4px;
+            max-width: 580px;
+            width: 92%;
+            max-height: 88vh;
+            overflow-y: auto;
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+            pointer-events: none;
+            transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0,0,0,0.05);
+        }
+
+        .washi-tape {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-2deg);
+            width: 130px;
+            height: 35px;
+            background-color: rgba(186, 230, 253, 0.8);
+            backdrop-filter: blur(2px);
+            z-index: 25;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-left: 2px dashed rgba(255,255,255,0.5);
+            border-right: 2px dashed rgba(255,255,255,0.5);
+        }
+
+        #mainLetter::-webkit-scrollbar { width: 6px; }
+        #mainLetter::-webkit-scrollbar-track { background: transparent; }
+        #mainLetter::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+        #mainLetter.active { 
+            opacity: 1; 
+            transform: translateY(0) scale(1); 
+            pointer-events: auto; 
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: #0f172a;
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight:100;
+            margin-top: 10px;
+        }
+
+        .message {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #334155;
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            display: inline;
+            background: linear-gradient(transparent 60%, rgba(125, 211, 252, 0.5) 60%);
+            font-style: italic;
+            color: #0f172a;
+            font-weight: 600;
+        }
+
+        .divider {
+            text-align: center;
+            color: #94a3b8;
+            margin: 25px 0;
+            font-size: 1.5rem;
+        }
+
+        .signature {
+            text-align: right;
+            font-family: 'Caveat', cursive; 
+            font-size: 1.8rem;
+            color: var(--accent-blue);
+            margin-top: 20px;
+            margin-bottom: 30px;
+            transform: rotate(-3deg);
+        }
+
+        .verse-box {
+            margin-top: 30px;
+            padding: 20px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid var(--accent-blue);
+            border-radius: 4px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.03);
+            position: relative;
+        }
+        
+        .verse-box::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 15px;
+            height: 15px;
+            background: radial-gradient(circle, #cbd5e1 30%, #94a3b8 100%);
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* --- PENGATURAN HALAMAN (TEKS vs GALERI) --- */
+        .page-content {
+            display: none;
+            animation: fadeIn 0.6s ease forwards;
+        }
+        .page-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- TOMBOL NAVIGASI HALAMAN --- */
+        .btn-nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 40px auto 10px;
+            background: transparent;
+            color: var(--accent-blue);
+            border: 2px solid var(--accent-blue);
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-nav:hover {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        /* --- GALERI POLAROID --- */
+        .polaroid-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 30px 0;
+            padding: 10px;
+        }
+
+        .polaroid {
+            background: #fff;
+            padding: 8px 8px 35px 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: 1px solid #eaeaea;
+            width: 135px;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            transform: rotate(-2deg);
+        }
+
+        /* Trik Posisi Berserakan / Acak */
+        .polaroid:nth-child(2n) { transform: rotate(5deg) translateY(5px); }
+        .polaroid:nth-child(3n) { transform: rotate(-4deg) translateY(-8px); }
+        .polaroid:nth-child(4n) { transform: rotate(7deg) translateY(10px); }
+        .polaroid:nth-child(5n) { transform: rotate(-6deg) translateY(12px); }
+        .polaroid:nth-child(7n) { transform: rotate(3deg) translateY(-10px); }
+
+        .polaroid:hover { 
+            transform: scale(1.3) rotate(0deg) translateY(0); 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2); 
+            z-index: 10; 
+        }
+
+        .polaroid img {
+            width: 100%;
+            height: 119px;
+            object-fit: cover;
+            background-color: #e2e8f0;
+            border-radius: 2px;
+        }
+
+        .polaroid .caption {
+            position: absolute;
+            bottom: 6px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-family: 'Caveat', cursive;
+            font-size: 1.1rem;
+            color: #334155;
+            padding: 0 5px;
+            line-height: 1.1;
+        }
+
+        /* --- TOMBOL MUSIK --- */
+        .music-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            color: var(--accent-blue);
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 50;
+            transition: 0.3s;
+            display: none; 
+        }
+
+        .music-btn.playing i {
+            animation: spinMusic 3s linear infinite;
+        }
+
+        @keyframes spinMusic { 100% { transform: rotate(360deg); } }
+
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="seasons.mp3" type="audio/mpeg">
+    </audio>
+
+    <i class="fas fa-star bg-icon icon-1"></i>
+    <i class="fas fa-cloud bg-icon icon-2"></i>
+    <i class="fas fa-whale bg-icon icon-3"></i>
+    <i class="fas fa-heart bg-icon icon-4"></i>
+    <i class="fas fa-sparkles bg-icon icon-5"></i>
+
+    <div class="music-btn" id="musicControl" onclick="toggleMusic()">
+        <i class="fas fa-compact-disc" id="musicIcon"></i>
+    </div>
+
+    <div id="envelope-wrapper">
+        <div class="envelope-box">
+            <div class="stamp"><i class="fas fa-dove"></i></div>
+            <i class="fas fa-envelope-open-text"></i>
+            <h2>knock knock sen🚪✊...</h2>
+            <button class="btn-open" onclick="bukaSurat()">Buka Sekarang 🩵</button>
+        </div>
+    </div>
+
+    <div id="mainLetter">
+        <div class="washi-tape"></div>
+
+        <div id="page-letter" class="page-content active">
+            <h1>For my blue person's❕</h1>
+            
+            <p class="message" style="text-align: center; font-weight: 300;">
+                HAPPYYY LEVEL UP DAYYY TO MY <span class="highlight">ONE AND ONLY</span> SENDYYY!! 🩵🥳<br>
+                Selamat merayakan umur 19 di tanggal 19 ini,
+                cindy callista beatrice sigalingging!🌷✨
+            </p>
+
+            <p class="message">
+                Di ulang tahun ke-17 aku bikinin ucapan sekaligus kompilasi awal our memory, di ulang tahun ke-18 aku coba bikin surat virtual for uuu, dan tahun ini... taraaaaaaaw! 😸 Suratnya pindah ke website! Ahahaha. Karena apaaa? karena SI niee bossss,, hahahhaa ampun dah😎🔥
+            </p>
+
+            <p class="message" style="text-align: left; font-weight: 300;">
+                Okeyy langsung sajaa, this is a message for you in your new age sen:
+            </p>
+
+            <p class="message">
+                First, I wanna say thank you... thank you for everything, thank you to being you, thank you udah selalu bertahan, terus berjuang, dan berusaha ngasih yang terbaik dari dirimu. Sembilan belas tahun itu bukan waktu yang sebentar buat kamu lewatin. Dari masa-masa sekolah, cerita nangis bareng, sampai sekarang ngeliat kamu udah jadi anak kuliahan yang lagi ngejalanin semester 2... I'm veryyyy veryyyyy proudddd of uuuu sennn! even when we're miles apart like this ᯓ ✈︎ ⋆°•☁︎
+            </p>
+
+            <p class="message">
+                Semoga kamu tetep semangat yaa ngejalanin kuliahmu as anak SI 🤘🦁. Kalau misal nanti tugas lagi numpuk, pusing, atau lagi down, <span class="highlight">take ur time duluu sen - breath, talk to our precious God, and kamu bisa nangis juga kok, tapi dikit aja yah🤏.</span> aku juga mau kamu buat inget, kalau kamu itu pinter dan berharga. Dan inget juga, <span class="highlight">I'll be here for u</span>, by my phone, kayak yang pernah aku bilang dulu. Jangan sungkan buat hubungin aku yaa, aku akan berusaha untuk selalu ada.
+            </p>
+
+            <p class="message">
+                Jangan lupa makan teratur, sesibuk apapun dirimu, makan number 1. kalau soal tidur emzzss..... aku juga gk bisa bilang jangan seringan begadang,,,, bikes as anak kuliah sudah pasti begadang itu adalah rutinitas hehehe😁. cuman kalau memang ada waktu istirahat lebih awal, istirahat yang cukup yaa sen. intinya tetep jaga kesehatan & rajin minum vitamin💊💪
+            </p>
+
+            <p class="message" style="text-align: center; font-style: italic;">
+                Ngomong-ngomong soal semua perjalanan ini sen, jujur aja rasa syukurku ke Tuhan nggak pernah putus karena udah dikasih kesempatan buat punya sahabat kaya kamu.
+            </p>
+            
+            <div class="divider">✯ ✯ ✯</div>
+
+            <p class="message" style="text-align: center;">
+                As and always, awali 19 tahunmu ini dengan berdoa, semoga apapun yang kamu kerjakan selalu diberkati. Semangat terus anak SI! Lop u n miss u so bad :( 🐋🫧🌷
+                Virtual hug 4u🫂<br>
+            </p>
+
+            <div class="signature">- Yaya</div>
+
+            <p class="message" style="text-align: Left;">
+                A verse for you📖✝️:<br>
+            </p>
+
+            <div class="verse-box">
+                <p style="font-family: 'Outfit', sans-serif; font-weight: 600; color: #0284c7; margin-bottom: 8px;">Filipi 1:3-4 TB</p>
+                <p style="font-family: 'Caveat', cursive; font-size: 1.2rem; color: #475569; line-height: 1.5;">
+                    "Aku mengucap syukur kepada Allahku setiap kali aku mengingat kamu. Dan setiap kali aku berdoa untuk kamu semua, aku selalu berdoa dengan sukacita."
+                </p>
+            </div>
+
+            <div class="verse-box">
+                <p style="font-family: 'Outfit', sans-serif; font-weight: 600; color: #0284c7; margin-bottom: 8px;">Mazmur 20:4 TB</p>
+                <p style="font-family: 'Caveat', cursive; font-size: 1.2rem; color: #475569; line-height: 1.5;">
+                    "Kiranya diberikan-Nya kepadamu apa yang kaukehendaki dan dijadikan-Nya berhasil apa yang kaurencanakan."
+                </p>
+            </div>
+
+            <div class="verse-box">
+                <p style="font-family: 'Outfit', sans-serif; font-weight: 600; color: #0284c7; margin-bottom: 8px;">Mazmur 37:4 TB</p>
+                <p style="font-family: 'Caveat', cursive; font-size: 1.2rem; color: #475569; line-height: 1.5;">
+                    "dan bergembiralah karena TUHAN; maka Ia akan memberikan kepadamu apa yang diinginkan hatimu."
+                </p>
+            </div>
+
+            <button class="btn-nav" onclick="switchPage('page-gallery')">
+                📸 <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+
+
+        <div id="page-gallery" class="page-content">
+            <h1>Our Chapter 19 📸</h1>
+            <p class="message" style="text-align: center;">
+                Sedikit foto kitaaaaaaa! ✨
+            </p>
+
+            <div class="polaroid-gallery">
+                <div class="polaroid">
+                    <img src="foto1.jpg" alt="Memori Sendy 1">
+                    <div class="caption">always proud!</div>
+                </div>
+
+                <div class="polaroid">
+                    <img src="foto2.jpg" alt="Memori Sendy 2">
+                    <div class="caption">my blue person 🩵</div>
+                </div>
+
+                <div class="polaroid">
+                    <img src="foto16.jpg" alt="Memori Sendy 3">
+                    <div class="caption">anak SI nii boss 😎🔥</div>
+                </div>
+
+                <div class="polaroid">
+                    <img src="foto3.jpg" alt="Memori Sendy 4">
+                    <div class="caption">virtual hug 🫂</div>
+                </div>
+
+                <div class="polaroid">
+                    <img src="foto14.jpg" alt="Memori Sendy 5">
+                    <div class="caption">god's best creation! 🌷</div>
+                </div>
+
+                <div class="polaroid">
+                    <img src="foto10.jpg" alt="Memori Sendy 6">
+                    <div class="caption">forever grateful 🤍🕊️</div>
+                </div>
+
+                <div class="polaroid">
+                    <img src="foto20.jpg" alt="Memori Sendy 7">
+                    <div class="caption">take your time, sen 🤏✨</div>
+                </div>
+
+                <div class="polaroid">
+                    <img src="foto5.jpg" alt="Memori Sendy 8">
+                    <div class="caption">ur so precious 🥺🩵</div>
+                </div>
+
+                <div class="polaroid">
+                    <img src="foto15.jpg" alt="Memori Sendy 9">
+                    <div class="caption">bestie since forever ♾️</div>
+                </div>
+
+                <div class="polaroid">
+                    <img src="foto11.jpg" alt="Memori Sendy 10">
+                    <div class="caption">keep shining bright 🌟</div>
+                </div>
+
+                <div class="polaroid">
+                    <img src="foto19.jpg" alt="Memori Sendy 11">
+                    <div class="caption">my blue person 🩵</div>
+                </div>
+
+                <div class="polaroid">
+                    <img src="foto12.jpg" alt="Memori Sendy 12">
+                    <div class="caption">make a wish🙏🪄</div>
+                </div>
+
+                <div class="polaroid">
+                    <img src="foto8.jpg" alt="Memori Sendy 13">
+                    <div class="caption">miss u so bad 🐋🫧</div>
+                </div>
+
+                <div class="polaroid">
+                    <img src="foto6.jpg" alt="Memori Sendy 14">
+                    <div class="caption">cheers to 19! 🎂🥳</div>
+                </div>
+
+                <div class="polaroid">
+                    <img src="foto13.jpg" alt="Memori Sendy 15">
+                    <div class="caption">my comfort zone ☁️🤍</div>
+                </div>
+
+                <div class="polaroid">
+                    <img src="foto18.jpg" alt="Memori Sendy 16">
+                    <div class="caption">we survived 18! 🥂</div>
+                </div>
+
+                <div class="polaroid">
+                    <img src="foto7.jpg" alt="Memori Sendy 17">
+                    <div class="caption">laughing until tummy hurts 😹</div>
+                </div>
+
+                <div class="polaroid">
+                    <img src="foto4.jpg" alt="Memori Sendy 18">
+                    <div class="caption">growing & glowing 🦋✨</div>
+                </div>
+
+                <div class="polaroid">
+                    <img src="foto9.jpg" alt="Memori Sendy 19">
+                    <div class="caption">19 on the 19th! 🪄🩵</div>
+                </div>
+
+                <div class="polaroid">
+                    <img src="foto17.jpg" alt="Memori Sendy 20">
+                    <div class="caption">love you♡✧˚ ༘ ⋆｡♡˚</div>
+                </div>
+
+            </div>
+
+            <p class="message" style="text-align: center;">
+                Maaf yaa sedikitnya the rial kedikitan,,,,,next harus ada foto bareng lagi browdiee🤗!!!!
+            </p>
+
+            <button class="btn-nav" onclick="switchPage('page-letter')">
+                <i class="fas fa-arrow-left"></i> Kembali ke Surat
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        let music = document.getElementById('bgMusic');
+        let musicBtn = document.getElementById('musicControl');
+        let isPlaying = false;
+
+        function bukaSurat() {
+            document.getElementById('envelope-wrapper').style.opacity = '0';
+            document.getElementById('envelope-wrapper').style.transform = 'scale(0.8)';
+            
+            setTimeout(() => {
+                document.getElementById('envelope-wrapper').style.display = 'none';
+                document.getElementById('mainLetter').classList.add('active');
+                
+                // Mulai Putar Musik
+                music.load();
+                let playPromise = music.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        isPlaying = true;
+                        musicBtn.style.display = 'flex';
+                        musicBtn.classList.add('playing');
+                    }).catch(error => {
+                        console.log("Autoplay diblokir", error);
+                        musicBtn.style.display = 'flex';
+                    });
+                }
+                
+                tembakConfetti();
+            }, 600);
+        }
+
+        // --- FUNGSI PINDAH HALAMAN ---
+        function switchPage(pageId) {
+            // Sembunyikan semua halaman
+            document.querySelectorAll('.page-content').forEach(page => {
+                page.classList.remove('active');
+            });
+            // Tampilkan halaman yang dituju
+            document.getElementById(pageId).classList.add('active');
+            // Scroll kertas kembali ke atas saat pindah halaman
+            document.getElementById('mainLetter').scrollTop = 0;
+        }
+
+        function toggleMusic() {
+            if (isPlaying) {
+                music.pause();
+                musicBtn.classList.remove('playing');
+                isPlaying = false;
+            } else {
+                music.play();
+                musicBtn.classList.add('playing');
+                isPlaying = true;
+            }
+        }
+
+        function tembakConfetti() {
+            var duration = 3 * 1000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 6,
+                    angle: 60,
+                    spread: 60,
+                    origin: { x: 0 },
+                    colors: ['#38bdf8', '#0ea5e9', '#ffffff']
+                });
+                confetti({
+                    particleCount: 6,
+                    angle: 120,
+                    spread: 60,
+                    origin: { x: 1 },
+                    colors: ['#38bdf8', '#0ea5e9', '#ffffff']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        }
+    </script>
+</body>
+</html>
